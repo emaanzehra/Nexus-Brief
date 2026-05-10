@@ -1,0 +1,30 @@
+# ─── Web framework ────────────────────────────────────────────────────────────
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+python-multipart==0.0.12
+
+# ─── Database ─────────────────────────────────────────────────────────────────
+sqlalchemy==2.0.36
+aiosqlite==0.20.0          # SQLite async driver (local dev)
+asyncpg==0.30.0            # PostgreSQL async driver (production)
+alembic==1.14.0            # Database migrations
+
+# ─── Auth ─────────────────────────────────────────────────────────────────────
+passlib[bcrypt]==1.7.4
+PyJWT==2.10.0
+pydantic[email]==2.10.2
+pydantic-settings==2.6.1
+
+# ─── AI & scraping ────────────────────────────────────────────────────────────
+google-generativeai==0.8.3
+requests==2.32.3
+beautifulsoup4==4.12.3
+lxml==5.3.0
+python-dateutil==2.9.0.post0
+
+# ─── Scheduling ───────────────────────────────────────────────────────────────
+apscheduler==3.10.4
+
+# ─── Utilities ────────────────────────────────────────────────────────────────
+python-dotenv==1.0.1
+httpx==0.28.0              # async HTTP client (testing + internal calls)

@@ -1,0 +1,64 @@
+version: "3.9"
+
+# ─── NexusBrief Docker Compose ────────────────────────────────────────────────
+# Local dev:        docker compose up
+# With PostgreSQL:  docker compose --profile postgres up
+# ──────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── NexusBrief FastAPI app ────────────────────────────────────────────────
+  app:
+    build: .
+    container_name: nexusbrief_app
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount source for hot reload in dev
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
+      # Persist SQLite DB between restarts
+      - nexusbrief_data:/app
+    environment:
+      - DATABASE_URL=${DATABASE_URL:-sqlite+aiosqlite:////app/nexusbrief.db}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-change-in-production}
+      - DEBUG=${DEBUG:-true}
+      - FETCH_LIVE=${FETCH_LIVE:-false}
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+        required: false
+    restart: unless-stopped
+    command: >
+      uvicorn backend.main:app
+      --host 0.0.0.0
+      --port 8000
+      --reload
+      --log-level info
+
+  # ── PostgreSQL (optional — activate with --profile postgres) ──────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: nexusbrief_db
+    profiles: [postgres]
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: nexusbrief
+      POSTGRES_USER: nexusbrief
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nexusbrief_dev}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexusbrief"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  nexusbrief_data:
+  postgres_data:
