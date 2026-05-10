@@ -1,4 +1,4 @@
-# ❖ NexusBrief — AI News Intelligence
+# ❖ NexusBrief | AI News Intelligence
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
@@ -219,7 +219,7 @@ pytest tests/ -v --cov=backend --cov-report=term-missing
 
 ## Production Deployment
 
-### Option 1 — Docker (recommended)
+### Option 1, Docker (recommended)
 
 ```bash
 # Build and start
@@ -231,7 +231,7 @@ docker compose --profile postgres up --build
 # Set environment variables in .env before starting
 ```
 
-### Option 2 — Manual (Ubuntu / Debian)
+### Option 2, Manual (Ubuntu / Debian)
 
 ```bash
 # Install dependencies
@@ -252,7 +252,7 @@ gunicorn backend.main:app \
     --timeout 120
 ```
 
-### Option 3 — Railway / Render / Fly.io (one-click)
+### Option 3, Railway / Render / Fly.io (one-click)
 
 These platforms auto-detect the Dockerfile and deploy automatically.
 Set `GEMINI_API_KEY`, `DATABASE_URL`, and `SECRET_KEY` as environment variables
@@ -263,8 +263,8 @@ in the platform dashboard.
 ## Scheduled News Fetching
 
 The scheduler runs automatically inside the FastAPI process:
-- **Daily at 06:00 UTC** — fetches and summarises all 6 topic categories
-- **Weekly on Sunday at 03:00 UTC** — prunes articles older than 30 days
+- **Daily at 06:00 UTC**, fetches and summarises all 6 topic categories
+- **Weekly on Sunday at 03:00 UTC**, prunes articles older than 30 days
 
 To run a manual fetch at any time:
 ```bash
@@ -286,7 +286,7 @@ FETCH_LIVE=true
    ```
    DATABASE_URL=postgresql+asyncpg://user:password@localhost:5432/nexusbrief
    ```
-4. Restart the server — tables are created automatically on startup.
+4. Restart the server, tables are created automatically on startup.
 
 ---
 
@@ -307,4 +307,4 @@ FETCH_LIVE=true
 
 ## License
 
-MIT — © 2025 NexusBrief Inc.
+MIT, © 2025 NexusBrief Inc.
